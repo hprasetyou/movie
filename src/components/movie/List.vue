@@ -2,61 +2,44 @@
   <div>
     <h1>Movie list</h1>
     <div class="movie-list row mx-md-0">
-      <div :class="['col-md-3','px-md-2','mb-sm-3']"
-       v-for="(movie, key) in movies" :key="key">
-        <movieItem
-        :title="movie.title"
-        :slug="movie.slug"
-        :cover="movie.cover"
-        :year="movie.year"
-         />
+      <div :class="['col-md-3','px-md-2','mb-sm-3']" v-for="(movie, key) in movies" :key="key">
+        <movieItem :title="movie.title" :slug="movie.slug" :cover="movie.cover" :year="movie.year" />
       </div>
     </div>
   </div>
 </template>
 <script>
-import movieListItem from './ListItem.vue';
+  import movieListItem from './ListItem.vue';
+  import axios from 'axios';
+  import _ from 'lodash';
+
   export default {
-    components: { 'movieItem':movieListItem},
+    components: {
+      'movieItem': movieListItem
+    },
     data() {
       return {
-        movies: [{
-          slug: 'wiro-sableng',
-          cover: 'https://lorempixel.com/400/200/',
-          title: 'Wiro sableng',
-          year: 1995,
-        },{
-          slug: 'wiro-sableng',
-          cover: 'https://lorempixel.com/400/200/',
-          title: 'Wiro sableng',
-          year: 1995,
-        },{
-          slug: 'wiro-sableng',
-          cover: 'https://lorempixel.com/400/200/',
-          title: 'Wiro sableng',
-          year: 1995,
-        },{
-          slug: 'wiro-sableng',
-          cover: 'https://lorempixel.com/400/200/',
-          title: 'Wiro sableng',
-          year: 1995,
-        },{
-          slug: 'wiro-sableng',
-          cover: 'https://lorempixel.com/400/200/',
-          title: 'Wiro sableng',
-          year: 1995,
-        },{
-          slug: 'wiro-sableng',
-          cover: 'https://lorempixel.com/400/200/',
-          title: 'Wiro sableng',
-          year: 1995,
-        },{
-          slug: 'wiro-sableng',
-          cover: 'https://lorempixel.com/400/200/',
-          title: 'Wiro sableng',
-          year: 1995,
-        },]
+        movies: []
       }
+    },
+    mounted() {
+      axios.get('https://api.themoviedb.org/3/movie/now_playing?api_key=295f89dbc8c29a74924c5df06ca15647&region=ID').then((
+        response) => {
+        let movies = response.data.results;
+        this.movies = _.map(movies, function(movie){
+            return {
+                title: movie.title,
+                slug: movie.id + '-' + movie.title.toLowerCase().replace(' ','-'),
+                cover: 'https://image.tmdb.org/t/p/w500' + movie.poster_path,
+                date: movie.release_date
+            }
+        })
+        console.log(movies1);
+        
+      }).catch(function (error) {
+        // handle error
+        console.log(error);
+      })
     }
   }
 
