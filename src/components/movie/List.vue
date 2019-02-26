@@ -1,25 +1,23 @@
 <template>
   <div>
     <h1>Movie list</h1>
-    <div class="movie-list row">
-      <div class="col-sm-3" v-for="(movie, key) in movies" :key="key">
-        <a :href="movie.slug" class="movie-list-item">
-          <div class="border rounded">
-            <div class="movie-list-item--image">
-              <img :src="movie.cover" alt="">
-            </div>
-            <div class="movie-list-item--info-wrapper">
-              <h3 class="movie-list-item--title">{{ movie.title }}</h3>
-              <p>{{ movie.year }}</p>
-            </div>
-          </div>
-        </a>
+    <div class="movie-list row mx-md-0">
+      <div :class="['col-md-3','px-md-2','mb-sm-3']"
+       v-for="(movie, key) in movies" :key="key">
+        <movieItem
+        :title="movie.title"
+        :slug="movie.slug"
+        :cover="movie.cover"
+        :year="movie.year"
+         />
       </div>
     </div>
   </div>
 </template>
 <script>
+import movieListItem from './ListItem.vue';
   export default {
+    components: { 'movieItem':movieListItem},
     data() {
       return {
         movies: [{
@@ -27,29 +25,39 @@
           cover: 'https://lorempixel.com/400/200/',
           title: 'Wiro sableng',
           year: 1995,
-        }]
+        },{
+          slug: 'wiro-sableng',
+          cover: 'https://lorempixel.com/400/200/',
+          title: 'Wiro sableng',
+          year: 1995,
+        },{
+          slug: 'wiro-sableng',
+          cover: 'https://lorempixel.com/400/200/',
+          title: 'Wiro sableng',
+          year: 1995,
+        },{
+          slug: 'wiro-sableng',
+          cover: 'https://lorempixel.com/400/200/',
+          title: 'Wiro sableng',
+          year: 1995,
+        },{
+          slug: 'wiro-sableng',
+          cover: 'https://lorempixel.com/400/200/',
+          title: 'Wiro sableng',
+          year: 1995,
+        },{
+          slug: 'wiro-sableng',
+          cover: 'https://lorempixel.com/400/200/',
+          title: 'Wiro sableng',
+          year: 1995,
+        },{
+          slug: 'wiro-sableng',
+          cover: 'https://lorempixel.com/400/200/',
+          title: 'Wiro sableng',
+          year: 1995,
+        },]
       }
     }
   }
 
 </script>
-<style lang="less">
-  .movie-list-item {
-
-    &,
-    &:hover {
-      color: inherit;
-    }
-
-    &:hover {
-      text-decoration: none;
-    }
-
-    &--image {
-      img {
-        width: 100%;
-      }
-    }
-  }
-
-</style>
