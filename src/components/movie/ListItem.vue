@@ -6,17 +6,24 @@
       </div>
       <div class="movie-list-item--info-wrapper p-md-3">
         <h3 class="movie-list-item--title">{{ title }}</h3>
-        <p>{{ date }}</p>
+        <span class="float-right pt-md-2">{{ date }}</span>
+        <star-rating v-model="rating" :read-only="true" :increment="0.5" :star-size="15"></star-rating>  
         {{ getPrice(rating) }}
       </div>
     </div>
   </router-link>
 </template>
 <script>
-import { priceMixins } from '../../priceMixins.js';
+  import {
+    priceMixins
+  } from '../../priceMixins.js';
+  import StarRating from 'vue-star-rating';
 
   export default {
-    mixins:[priceMixins],
+    components: {
+      'star-rating': StarRating
+    },
+    mixins: [priceMixins],
     props: {
       date: String,
       slug: String,

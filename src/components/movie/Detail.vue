@@ -9,8 +9,8 @@
       </div>
       <div class="col-lg-8">
           <div class="movie-title border-bottom">
-            <h4>{{ movie.title }}</h4>
-            <span class="float-right">Rating {{ movie.vote_average }}</span>
+            <h4>{{ movie.title }}</h4>    
+            <star-rating v-model="movie.vote_average" :read-only="true" :increment="0.5" :star-size="15"></star-rating>
             <span>Language: {{ movie.languages }}</span>
           </div>
           <div class="movie-description mb-lg-4">
@@ -33,8 +33,12 @@ import _ from 'lodash';
 import { priceMixins } from '../../priceMixins.js';
 import { collectionsMixins } from '../../collectionsMixins.js';
 import { balanceMixins } from '../../balanceMixins.js';
+import StarRating from 'vue-star-rating';
 
 export default {
+  components:{
+    'star-rating':StarRating
+  },
   data() {
     return {
       movie:{}
