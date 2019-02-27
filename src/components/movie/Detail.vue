@@ -19,7 +19,7 @@
           <div class="movie-info">
             <span>Genres: </span><span class="font-italic">{{ movie.genres }}</span> 
           </div>
-          {{ getPrice(rating) }}
+          {{ getPrice(movie.vote_average) }}
       </div>
     </div>
   </div>
