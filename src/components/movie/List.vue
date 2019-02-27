@@ -24,7 +24,7 @@
       }
     },
     mounted() {
-      axios.get(`${conf.ApiUrl}/3/movie/now_playing?api_key=${conf.ClientKey}&region=ID`).then((
+      axios.get(`${conf.ApiUrl}/now_playing?api_key=${conf.ClientKey}&region=ID`).then((
         response) => {
         let movies = response.data.results;
         this.movies = _.map(movies, function(movie){
