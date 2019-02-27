@@ -1,5 +1,5 @@
 <template>
-  <a :href="slug" class="movie-list-item">
+  <router-link tag="a" class="movie-list-item" :to="'/'+slug">
     <div class="border rounded">
       <div class="movie-list-item--image">
         <img :src="cover" alt="">
@@ -9,7 +9,7 @@
         <p>{{ year }}</p>
       </div>
     </div>
-  </a>
+  </router-link>
 </template>
 <script>
   export default {
