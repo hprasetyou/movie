@@ -42,6 +42,14 @@ export default {
     axios.get(`${conf.ApiUrl}/${this.movie.id}?api_key=${conf.ClientKey}`).then((
         response) => {
         let movie = response.data;
+        this.setMovie(movie);      
+    }).catch(function (error) {
+        // handle error
+        console.log(error);
+    })
+  },
+  methods: {
+    setMovie(movie) {
         this.$set(this.movie,'title', movie.title);
         this.$set(this.movie,'cover',`https://image.tmdb.org/t/p/w500${movie.poster_path}`);
         this.$set(this.movie,'overview', movie.overview);
@@ -49,15 +57,8 @@ export default {
         this.$set(this.movie,'genres',_.map(movie.genres,'name').join(','))
         this.$set(this.movie,'vote_average', movie.vote_average)
         this.$set(this.movie,'duration', Math.floor(movie.runtime/60)+' hour '+(movie.runtime%60)+' min' )
-        
-        console.log(movie);
-        
-        
-    }).catch(function (error) {
-        // handle error
-        console.log(error);
-    })
-  },
+    }
+  }
 }
 </script>
 <style lang="less">
