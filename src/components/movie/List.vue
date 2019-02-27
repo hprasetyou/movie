@@ -34,7 +34,6 @@
                 date: movie.release_date
             }
         })
-        console.log(movies1);
         
       }).catch(function (error) {
         // handle error
