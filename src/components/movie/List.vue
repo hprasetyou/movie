@@ -12,6 +12,7 @@
   import movieListItem from './ListItem.vue';
   import axios from 'axios';
   import _ from 'lodash';
+  import * as conf from '../../config.js';
 
   export default {
     components: {
@@ -23,7 +24,7 @@
       }
     },
     mounted() {
-      axios.get('https://api.themoviedb.org/3/movie/now_playing?api_key=295f89dbc8c29a74924c5df06ca15647&region=ID').then((
+      axios.get(`${conf.ApiUrl}/3/movie/now_playing?api_key=${conf.ClientKey}&region=ID`).then((
         response) => {
         let movies = response.data.results;
         this.movies = _.map(movies, function(movie){
