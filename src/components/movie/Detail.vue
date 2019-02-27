@@ -19,6 +19,7 @@
           <div class="movie-info">
             <span>Genres: </span><span class="font-italic">{{ movie.genres }}</span> 
           </div>
+          {{ getPrice(rating) }}
       </div>
     </div>
   </div>
@@ -27,12 +28,15 @@
 import axios from 'axios';
 import * as conf from '../../config.js';
 import _ from 'lodash';
+import { priceMixins } from '../../priceMixins.js';
+
 export default {
   data() {
     return {
       movie:{}
     }
   },
+  mixins:[priceMixins],
   mounted() {
     this.movie.id = this.$route.params.slug.split('-')[0];
     axios.get(`${conf.ApiUrl}/${this.movie.id}?api_key=${conf.ClientKey}`).then((

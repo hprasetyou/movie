@@ -6,18 +6,23 @@
       </div>
       <div class="movie-list-item--info-wrapper p-md-3">
         <h3 class="movie-list-item--title">{{ title }}</h3>
-        <p>{{ year }}</p>
+        <p>{{ date }}</p>
+        {{ getPrice(rating) }}
       </div>
     </div>
   </router-link>
 </template>
 <script>
+import { priceMixins } from '../../priceMixins.js';
+
   export default {
+    mixins:[priceMixins],
     props: {
-      year: Number,
+      date: String,
       slug: String,
       cover: String,
-      title: String
+      title: String,
+      rating: Number,
     }
   }
 
