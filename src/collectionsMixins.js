@@ -1,4 +1,9 @@
 export const collectionsMixins = {
+    data(){
+        return{
+            collections:[]
+        }
+    },
     methods:{
         addCollections(id){
             let collections = [];
@@ -7,6 +12,7 @@ export const collectionsMixins = {
             }            
             collections.push(id);
             localStorage.setItem('collections',JSON.stringify(collections));
+            this.collections = collections;
         },
         getCollections(){
             if (localStorage.getItem('collections')) {
@@ -15,18 +21,15 @@ export const collectionsMixins = {
             return false;
         },
         isInCollections(id){
-            if(!this.getCollections()){
-                return false;
-            }
-            if(this.getCollections().indexOf(id) < 0){
+            if(this.collections.indexOf(id) < 0){
                 return false;
             }
             return true;
         }
     },
     mounted(){
-        if(!this.getBalance()){
-            this.setBalance(1000000);
+        if(this.getCollections()){
+            this.collections = this.getCollections();
         }
     }
 }
