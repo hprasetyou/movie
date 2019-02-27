@@ -19,7 +19,9 @@
           <div class="movie-info">
             <span>Genres: </span><span class="font-italic">{{ movie.genres }}</span> 
           </div>
+          <span v-if="isInCollections(movie.id)">you have this!</span>
           {{ getPrice(movie.vote_average) }}
+          <button v-if="isAffordable() && !isInCollections(movie.id)" @click="addToCollection" class="btn btn-primary">Add to Collections</button>
       </div>
     </div>
   </div>
@@ -29,6 +31,8 @@ import axios from 'axios';
 import * as conf from '../../config.js';
 import _ from 'lodash';
 import { priceMixins } from '../../priceMixins.js';
+import { collectionsMixins } from '../../collectionsMixins.js';
+import { balanceMixins } from '../../balanceMixins.js';
 
 export default {
   data() {
@@ -36,7 +40,7 @@ export default {
       movie:{}
     }
   },
-  mixins:[priceMixins],
+  mixins:[priceMixins,collectionsMixins,balanceMixins],
   mounted() {
     this.movie.id = this.$route.params.slug.split('-')[0];
     axios.get(`${conf.ApiUrl}/${this.movie.id}?api_key=${conf.ClientKey}`).then((
@@ -45,10 +49,22 @@ export default {
         this.setMovie(movie);      
     }).catch(function (error) {
         // handle error
-        console.log(error);
+        console.error(error);
     })
   },
   methods: {
+    addToCollection(){
+      this.addCollections(this.movie.id);
+      this.setBalance(this.getBalance() - this.getPrice(this.movie.vote_average));
+      console.log(this.getCollections());
+      
+    },
+    isAffordable(){
+      if( this.getBalance() >= this.getPrice(this.movie.vote_average)){
+        return true;
+      }
+      return false;
+    },
     setMovie(movie) {
         this.$set(this.movie,'title', movie.title);
         this.$set(this.movie,'cover',`https://image.tmdb.org/t/p/w500${movie.poster_path}`);
