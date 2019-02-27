@@ -3,5 +3,5 @@ import movieDetail from './components/movie/Detail.vue';
 
 export const routes = [
     { path: '', component: movieList },
-    { path: '/detail', component: movieDetail }
+    { path: '/:slug', component: movieDetail }
 ];
