@@ -1,10 +1,20 @@
 <template>
-  <div>
-    <h1>Movie list</h1>
-    <div class="movie-list row mx-md-0">
-      <div :class="['col-md-3','px-md-2','mb-sm-3']" v-for="(movie, key) in movies" :key="key">
-        <movieItem :title="movie.title" :slug="movie.slug" :cover="movie.cover" :date="movie.date" :rating="movie.rating" />
+  <div class="row">
+    <div class="section col-lg-9">
+      <div class="section--title my-lg-3 py-lg-3 border-bottom">
+        <h3 class="my-lg-0">{{ title }}</h3>
       </div>
+      <div class="movie-list row mx-md-0">
+        <div :class="['col-md-3','px-md-2','mb-sm-3']" v-for="(movie, key) in movies" :key="key">
+          <movieItem :title="movie.title" :slug="movie.slug" :cover="movie.cover" :date="movie.date" :rating="movie.rating" />
+        </div>
+      </div>
+    </div>
+    <div class="section mycollections col-lg-3">
+      <div class="section--title my-lg-3 py-lg-3 border-bottom">
+        <h3 class="my-lg-0">My Collections</h3>
+      </div>
+
     </div>
   </div>
 </template>
@@ -21,7 +31,8 @@
     data() {
       return {
         movies: [],
-        page:1
+        page:1,
+        title:'Now Playing'
       }
     },
     methods: {
