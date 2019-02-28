@@ -28,6 +28,29 @@
           <button v-if="isAffordable() && !isInCollections(movie)" @click="addToCollection" class="btn btn-primary">Add to Collections</button>
       </div>
     </div>
+    <div class="section-credits">
+      <div class="section--title border-bottom py-lg-3 my-sm-3">
+        <h3 class="my-lg-0">Crew & Cast</h3>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <h5>Cast</h5>
+          <div class="cast-list row">
+            <div class="col-lg-3 px-lg-2" v-for="(cast, key) in credits.cast" :key="key">
+              <crew :name="cast.name" :role="cast.character" :profilePath="cast.profile_path" />
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <h5>Crew</h5>
+          <div class="crew-list row">
+            <div class="col-lg-3 mb-lg-3 px-lg-2" v-for="(crew, key) in credits.crew" :key="key">
+              <crew :name="crew.name" :role="crew.job" :profilePath="crew.profile_path" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="section-recommendation">
       <div class="section--title border-bottom py-lg-3 my-sm-3">
         <h3 class="my-lg-0">Recommendations</h3>
@@ -55,6 +78,7 @@ import axios from 'axios';
 import * as conf from '../../config.js';
 import _ from 'lodash';
 import movieListItem from './ListItem.vue';
+import crewListItem from '../crew/listItem.vue';
 import { priceMixins } from '../../priceMixins.js';
 import { collectionsMixins } from '../../collectionsMixins.js';
 import { balanceMixins } from '../../balanceMixins.js';
@@ -63,13 +87,16 @@ import StarRating from 'vue-star-rating';
 export default {
   components:{
     'star-rating':StarRating,
-    'movie-item': movieListItem
+    'movie-item': movieListItem,
+    'crew': crewListItem
   },
   data() {
     return {
       movie:{},
       recommendations:[],
-      similar:[]
+      similar:[],
+      credits:{},
+      casts:[]
     }
   },
   mixins:[priceMixins,collectionsMixins,balanceMixins],
@@ -97,19 +124,20 @@ export default {
       return false;
     },
     setMovieInfo(movie) {
-      console.log(movie);
+      console.log(movie.credits);
       
         this.$set(this.movie,'title', movie.title);
         this.$set(this.movie,'cover',`https://image.tmdb.org/t/p/w500${movie.poster_path}`);
         this.$set(this.movie,'overview', movie.overview);
         this.$set(this.movie,'date', movie.release_date);
-        this.$set(this.movie,'languages',_.map(movie.spoken_languages,'name').join(','))
-        this.$set(this.movie,'genres',_.map(movie.genres,'name').join(','))
-        this.$set(this.movie,'rating', movie.vote_average)
-        this.$set(this.movie,'duration', Math.floor(movie.runtime/60)+' hour '+(movie.runtime%60)+' min' )
+        this.$set(this.movie,'languages',_.map(movie.spoken_languages,'name').join(','));
+        this.$set(this.movie,'genres',_.map(movie.genres,'name').join(','));
+        this.$set(this.movie,'rating', movie.vote_average);
+        this.$set(this.movie,'duration', Math.floor(movie.runtime/60)+' hour '+(movie.runtime%60)+' min' );
+        this.credits = movie.credits;
     },
     getMovieInfo(movieId){
-        axios.get(`${conf.ApiUrl}/${movieId}?api_key=${conf.ClientKey}`).then((
+        axios.get(`${conf.ApiUrl}/${movieId}?api_key=${conf.ClientKey}&append_to_response=credits`).then((
             response) => {
             let movie = response.data;
             this.setMovieInfo(movie);      
