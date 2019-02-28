@@ -12,6 +12,17 @@ export const priceMixins = {
               } else {
                 return 0;
               }
+        },
+        numberWithCommas(x) {
+          var parts = x.toString().split(".");
+          parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+          return parts.join(",");
+        },
+        formatRp(x){
+          return `Rp ${this.numberWithCommas(x)}`;
+        },
+        getPriceString(rating){
+          return this.formatRp(this.getPrice(rating));
         }
     }
 }

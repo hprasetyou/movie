@@ -8,7 +8,7 @@
         <h3 class="movie-list-item--title">{{ title }}</h3>
         <span class="float-right pt-md-2">{{ year }}</span>
         <star-rating v-model="rating" :read-only="true" :show-rating="false" :increment="0.5" :star-size="15"></star-rating>  
-        {{ getPrice(rating) }}
+        {{ getPriceString(rating) }}
       </div>
     </div>
   </router-link>

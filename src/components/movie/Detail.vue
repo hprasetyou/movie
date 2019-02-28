@@ -20,8 +20,11 @@
             <span>Genres: </span><span class="font-italic">{{ movie.genres }}</span> 
           </div>
           <span v-if="isInCollections(movie)">you have this!</span>
-          {{ getPrice(movie.rating) }}
-          your balance: {{ balance }}
+          <div class="movie-price">
+            <h4>{{ getPriceString(movie.rating) }}</h4>
+            <p>your balance: {{ formatRp(balance) }}</p>
+          </div>
+          
           <button v-if="isAffordable() && !isInCollections(movie)" @click="addToCollection" class="btn btn-primary">Add to Collections</button>
       </div>
     </div>
