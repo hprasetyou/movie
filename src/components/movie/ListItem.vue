@@ -1,10 +1,10 @@
 <template>
   <router-link tag="a" class="movie-list-item" :to="'/'+slug">
-    <div class="border rounded">
-      <div class="movie-list-item--image">
+    <div :class="['border','rounded',(display=='list'?'row':'')]">
+      <div :class="['movie-list-item--image',(display=='list'?'col-4 col-lg-3':'')]">
         <img :src="cover" alt="">
       </div>
-      <div class="movie-list-item--info-wrapper p-md-3">
+      <div :class="['movie-list-item--info-wrapper','p-md-3',(display=='list'?'col-8 col-lg-9':'')]">
         <h3 class="movie-list-item--title">{{ title }}</h3>
         <span class="float-right pt-md-2">{{ year }}</span>
         <star-rating v-model="rating" :read-only="true" :show-rating="false" :increment="0.5" :star-size="15"></star-rating>  
@@ -25,6 +25,10 @@
     },
     mixins: [priceMixins],
     props: {
+      display: {
+        default: 'grid',
+        type: String
+      },
       date: String,
       slug: String,
       cover: String,
