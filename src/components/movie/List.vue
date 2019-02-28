@@ -19,8 +19,8 @@
         <h3 class="my-lg-0">My Collections</h3>
       </div>
       <div class="movie-list row mx-md-0">
-        <div v-for="(movie, key) in collections" :key="key">
-          <movie-item :title="movie.title" :display="'list'" :slug="movie.slug" :cover="movie.cover" :date="movie.date" :rating="movie.rating" />
+        <div v-for="(movie, key) in collections" class="mb-2" :key="key">
+          <movie-item :showPrice="false" :showRating="false" :title="movie.title" :display="'list'" :slug="movie.slug" :cover="movie.cover" :date="movie.date" :rating="movie.rating" />
         </div>
       </div>
     </div>

@@ -5,10 +5,10 @@
         <img :src="cover" alt="">
       </div>
       <div :class="['movie-list-item--info-wrapper','p-md-3',(display=='list'?'col-8 col-lg-9':'')]">
-        <h3 class="movie-list-item--title">{{ title }}</h3>
-        <p class="movie-list-item--year pt-md-2">{{ year }}</p>
-        <star-rating  v-on="showRating" v-model="rating" :max-rating="10" :read-only="true" :show-rating="false" :increment="0.1" :star-size="15"></star-rating>  
-        <p v-on="showPrice" class="movie-list-item--rating">{{ getPriceString(rating) }}</p>
+        <h3 class="movie-list-item--title mb-0">{{ title }}</h3>
+        <small class="movie-list-item--year">{{ year }}</small>
+        <star-rating  v-if="showRating" v-model="rating" :max-rating="10" :read-only="true" :show-rating="false" :increment="0.1" :star-size="15"></star-rating>  
+        <p v-if="showPrice" class="movie-list-item--rating">{{ getPriceString(rating) }}</p>
       </div>
     </div>
   </router-link>
