@@ -5,12 +5,12 @@ export const collectionsMixins = {
         }
     },
     methods:{
-        addCollections(id){
+        addCollections(movie){
             let collections = [];
             if (this.getCollections()) {
                 collections = this.getCollections();
             }            
-            collections.push(id);
+            collections.push(movie);
             localStorage.setItem('collections',JSON.stringify(collections));
             this.collections = collections;
         },
@@ -20,8 +20,8 @@ export const collectionsMixins = {
             }
             return false;
         },
-        isInCollections(id){
-            if(this.collections.indexOf(id) < 0){
+        isInCollections(movie){
+            if(this.collections.indexOf(movie) < 0){
                 return false;
             }
             return true;

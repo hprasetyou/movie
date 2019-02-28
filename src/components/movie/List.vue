@@ -6,7 +6,7 @@
       </div>
       <div class="movie-list row mx-md-0">
         <div :class="['col-md-3','px-md-2','mb-sm-3']" v-for="(movie, key) in movies" :key="key">
-          <movieItem :title="movie.title" :slug="movie.slug" :cover="movie.cover" :date="movie.date" :rating="movie.rating" />
+          <movie-item :title="movie.title" :slug="movie.slug" :cover="movie.cover" :date="movie.date" :rating="movie.rating" />
         </div>
       </div>
     </div>
@@ -14,7 +14,11 @@
       <div class="section--title my-lg-3 py-lg-3 border-bottom">
         <h3 class="my-lg-0">My Collections</h3>
       </div>
-
+      <div class="movie-list row mx-md-0">
+        <div v-for="(movie, key) in collections" :key="key">
+          <movie-item :title="movie.title" :display="'list'" :slug="movie.slug" :cover="movie.cover" :date="movie.date" :rating="movie.rating" />
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -23,11 +27,13 @@
   import axios from 'axios';
   import _ from 'lodash';
   import * as conf from '../../config.js';
+  import { collectionsMixins } from '../../collectionsMixins.js';
 
   export default {
     components: {
-      'movieItem': movieListItem
+      'movie-item': movieListItem
     },
+    mixins:[collectionsMixins],
     data() {
       return {
         movies: [],
@@ -60,6 +66,8 @@
       if(this.$route.query.page){
         this.page = this.$route.query.page;
       }
+      console.log(this.collections);
+      
       this.getMovies(this.page);
     }
   }
