@@ -124,7 +124,6 @@ export default {
       return false;
     },
     setMovieInfo(movie) {
-      console.log(movie.credits);
       
         this.$set(this.movie,'title', movie.title);
         this.$set(this.movie,'cover',`https://image.tmdb.org/t/p/w500${movie.poster_path}`);

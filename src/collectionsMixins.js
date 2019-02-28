@@ -1,3 +1,4 @@
+import _ from "lodash";
 export const collectionsMixins = {
     data(){
         return{
@@ -21,7 +22,8 @@ export const collectionsMixins = {
             return false;
         },
         isInCollections(movie){
-            if(this.collections.indexOf(movie) < 0){
+            let check = _.findIndex(this.collections,function(o){ return o.id == movie.id });          
+            if(check < 0){
                 return false;
             }
             return true;
