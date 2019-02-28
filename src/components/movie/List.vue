@@ -32,7 +32,7 @@
           this.movies = _.map(movies, function (movie) {
             return {
               title: movie.title,
-              slug: movie.id + '-' + movie.title.toLowerCase().replace(' ', '-'),
+              slug: movie.id + '-' + movie.title.toLowerCase().replace(/\s+/g, '-'),
               cover: 'https://image.tmdb.org/t/p/w500' + movie.poster_path,
               date: movie.release_date,
               rating: movie.vote_average

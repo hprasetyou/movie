@@ -71,13 +71,16 @@ export default {
   },
   mixins:[priceMixins,collectionsMixins,balanceMixins],
   mounted() {
-    let movieId = this.$route.params.slug.split('-')[0];
-    this.movie.id = movieId;
-    this.getMovieInfo(movieId);
-    this.getRecommendations(movieId);
-    this.getSimilar(movieId);
+    this.loadMovie();
   },
   methods: {
+    loadMovie(){
+      let movieId = this.$route.params.slug.split('-')[0];
+      this.movie.id = movieId;
+      this.getMovieInfo(movieId);
+      this.getRecommendations(movieId);
+      this.getSimilar(movieId);
+    },
     addToCollection(){
       this.addCollections(this.movie.id);
       this.balance -= this.getPrice(this.movie.vote_average);
@@ -130,17 +133,23 @@ export default {
         })
     },
     transformMoviesDataCollections(movies){
-      return _.map(movies, function (movie) {
+      return _.map(movies, function (movie) {        
         return {
           title: movie.title,
-          slug: movie.id + '-' + movie.title.toLowerCase().replace(' ', '-'),
+          slug: movie.id + '-' + movie.title.replace(/\s+/g, '-').toLowerCase(),
           cover: 'https://image.tmdb.org/t/p/w500' + movie.poster_path,
           date: movie.release_date,
           rating: movie.vote_average
         }
       })
     }
-  }
+  },
+  watch:{
+    $route (to, from){
+        console.log('route uupdated');
+        this.loadMovie();
+    }
+  } 
 }
 </script>
 <style lang="less">
