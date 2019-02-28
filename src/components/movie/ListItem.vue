@@ -6,9 +6,9 @@
       </div>
       <div :class="['movie-list-item--info-wrapper','p-md-3',(display=='list'?'col-8 col-lg-9':'')]">
         <h3 class="movie-list-item--title">{{ title }}</h3>
-        <span class="float-right pt-md-2">{{ year }}</span>
-        <star-rating v-model="rating" :read-only="true" :show-rating="false" :increment="0.5" :star-size="15"></star-rating>  
-        {{ getPriceString(rating) }}
+        <p class="movie-list-item--year pt-md-2">{{ year }}</p>
+        <star-rating  v-on="showRating" v-model="rating" :max-rating="10" :read-only="true" :show-rating="false" :increment="0.1" :star-size="15"></star-rating>  
+        <p v-on="showPrice" class="movie-list-item--rating">{{ getPriceString(rating) }}</p>
       </div>
     </div>
   </router-link>
@@ -34,6 +34,14 @@
       cover: String,
       title: String,
       rating: Number,
+      showPrice: {
+        default: true,
+        type: Boolean
+      },
+      showRating: {
+        default: true,
+        type: Boolean
+      }
     },
     computed:{
       year(){

@@ -10,7 +10,7 @@
       <div class="col-lg-8">
           <div class="movie-title border-bottom">
             <h4>{{ movie.title }}</h4>    
-            <star-rating v-model="movie.rating" :read-only="true" :increment="0.5" :star-size="15"></star-rating>
+            <star-rating v-model="movie.rating" :read-only="true" :max-rating="10" :increment="0.1" :star-size="15"></star-rating>
             <span>Language: {{ movie.languages }}</span>
           </div>
           <div class="movie-description mb-lg-4">
