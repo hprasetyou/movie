@@ -3,8 +3,8 @@
     <div class="section col-lg-9">
       <div class="section--title my-lg-3 py-lg-3 border-bottom">
         <div class="pagination float-right">
-          <router-link tag="a" class="btn" :to="'?page=1'"> < </router-link>
-          <router-link tag="a" class="btn" :to="'?page=2'"> > </router-link>
+          <router-link tag="a" class="btn" :to="'?page=1'"> <font-awesome-icon icon="chevron-left" /> </router-link>
+          <router-link tag="a" class="btn" :to="'?page=2'"> <font-awesome-icon icon="chevron-right" />  </router-link>
         </div>
         <h3 class="my-lg-0">{{ title }}</h3>
       </div>
