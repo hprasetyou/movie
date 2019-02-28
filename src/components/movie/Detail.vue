@@ -33,20 +33,24 @@
         <h3 class="my-lg-0">Crew & Cast</h3>
       </div>
       <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-6 px-lg-4">
           <h5>Cast</h5>
-          <div class="cast-list row">
-            <div class="col-lg-3 mb-lg-3 px-lg-2" v-for="(cast, key) in credits.cast" :key="key">
-              <crew :name="cast.name" :role="cast.character" :profilePath="cast.profile_path" />
-            </div>
+          <div class="cast-list">
+            <carousel :per-page="4" :paginationEnabled="false" :navigationEnabled="true">
+              <slide v-for="(cast, key) in credits.cast" :key="key">
+                <crew :name="cast.name" :role="cast.character" :profilePath="cast.profile_path" />
+              </slide>
+            </carousel>
           </div>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-6 px-lg-4">
           <h5>Crew</h5>
-          <div class="crew-list row">
-            <div class="col-lg-3 mb-lg-3 px-lg-2" v-for="(crew, key) in credits.crew" :key="key">
-              <crew :name="crew.name" :role="crew.job" :profilePath="crew.profile_path" />
-            </div>
+          <div class="crew-list">
+            <carousel :per-page="4" :paginationEnabled="false" :navigationEnabled="true">
+               <slide v-for="(crew, key) in credits.crew" :key="key">
+                 <crew :name="crew.name" :role="crew.job" :profilePath="crew.profile_path" />
+               </slide>
+            </carousel>
           </div>
         </div>
       </div>
@@ -83,12 +87,15 @@ import { priceMixins } from '../../priceMixins.js';
 import { collectionsMixins } from '../../collectionsMixins.js';
 import { balanceMixins } from '../../balanceMixins.js';
 import StarRating from 'vue-star-rating';
+import { Carousel, Slide } from 'vue-carousel';
 
 export default {
   components:{
     'star-rating':StarRating,
     'movie-item': movieListItem,
-    'crew': crewListItem
+    'crew': crewListItem,
+    Carousel,
+    Slide
   },
   data() {
     return {
