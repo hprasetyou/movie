@@ -35,6 +35,16 @@
         </div>
       </div>
     </div>
+    <div class="section-recommendation">
+      <div class="section--title border-bottom py-lg-3 my-sm-3">
+        <h3 class="my-lg-0">Similar</h3>
+      </div>
+      <div class="movie-list row mx-md-0">
+        <div :class="['col-md-2','px-md-2','mb-sm-3']" v-for="(movie, key) in similar" :key="key">
+          <movie-item :title="movie.title" :slug="movie.slug" :cover="movie.cover" :date="movie.date" :rating="movie.rating" />
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -65,6 +75,7 @@ export default {
     this.movie.id = movieId;
     this.getMovieInfo(movieId);
     this.getRecommendations(movieId);
+    this.getSimilar(movieId);
   },
   methods: {
     addToCollection(){
@@ -101,6 +112,17 @@ export default {
             response) => {
             let movies = response.data.results;    
             this.recommendations = this.transformMoviesDataCollections(movies);
+            
+        }).catch(function (error) {
+            // handle error
+            console.error(error);
+        })
+    },
+    getSimilar(movieId){
+        axios.get(`${conf.ApiUrl}/${movieId}/similar?api_key=${conf.ClientKey}`).then((
+            response) => {
+            let movies = response.data.results;    
+            this.similar = this.transformMoviesDataCollections(movies);
             
         }).catch(function (error) {
             // handle error
