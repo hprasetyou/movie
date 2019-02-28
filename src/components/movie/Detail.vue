@@ -36,7 +36,7 @@
         <div class="col-sm-6">
           <h5>Cast</h5>
           <div class="cast-list row">
-            <div class="col-lg-3 px-lg-2" v-for="(cast, key) in credits.cast" :key="key">
+            <div class="col-lg-3 mb-lg-3 px-lg-2" v-for="(cast, key) in credits.cast" :key="key">
               <crew :name="cast.name" :role="cast.character" :profilePath="cast.profile_path" />
             </div>
           </div>
