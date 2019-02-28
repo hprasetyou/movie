@@ -1,6 +1,6 @@
 <template>
   <router-link tag="a" class="movie-list-item" :to="'/'+slug">
-    <div :class="['border','rounded',(display=='list'?'row':'')]">
+    <div :class="['border','rounded',(display=='list'?'row':display)]">
       <div :class="['movie-list-item--image',(display=='list'?'col-4 px-0 col-lg-3':'')]">
         <img :src="cover" alt="">
       </div>
@@ -44,9 +44,28 @@
 
 </script>
 <style lang="less">
+@grid-bg-color: #111111;
+@grid-text-color: #ffffff;
   .movie-list-item {
     & > div{
       overflow: hidden;
+    }
+    .grid{
+      position: relative;
+    }
+    &--info-wrapper{
+      .grid &{
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        color: @grid-text-color;
+        background: fadeout(@grid-bg-color,50%);
+        transition: all .3s ease-out;
+        height: 40%;
+      }
+      .grid:hover &{
+        height: 50%;
+      }
     }
 
     &,
@@ -56,10 +75,17 @@
 
     &:hover {
       text-decoration: none;
+      .grid img {
+        transform: scale(1.04);
+        filter: blur(2px);
+      }
     }
 
     &--image {
+      overflow: hidden;
       img {
+        transform: scale(1);
+        transition: all .3s ease-out;
         width: 100%;
       }
     }
