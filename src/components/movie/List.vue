@@ -3,8 +3,8 @@
     <div class="section col-lg-9">
       <div class="section--title my-lg-3 py-lg-3 border-bottom">
         <div class="pagination float-right">
-          <router-link tag="a" class="btn" :to="'?page=1'"> <font-awesome-icon icon="chevron-left" /> </router-link>
-          <router-link tag="a" class="btn" :to="'?page=2'"> <font-awesome-icon icon="chevron-right" />  </router-link>
+          <button class="btn" v-on:click="goToPage(-1)"> <font-awesome-icon icon="chevron-left" /> </button>
+          <button class="btn" v-on:click="goToPage(1)"> <font-awesome-icon icon="chevron-right" />  </button>
         </div>
         <h3 class="my-lg-0">{{ title }}</h3>
       </div>
@@ -41,16 +41,47 @@
     data() {
       return {
         movies: [],
-        page:1,
-        title:'Now Playing'
+        title:'Now Playing',
+        listMode:'movie/now_playing'
       }
     },
     methods: {
-      getMovies(page) {
-        axios.get(`${conf.ApiUrl}/now_playing?api_key=${conf.ClientKey}&region=ID&page=${page}`).then((
+      getMovies(page=1,params='&region=ID') {
+        axios.get(`${conf.ApiUrl}${this.listMode}?api_key=${conf.ClientKey}${params}&page=${page}`).then((
           response) => {
           let movies = response.data.results;
-          this.movies = _.map(movies, function (movie) {
+          this.movies = this.transformCollections(movies)
+
+        }).catch(function (error) {
+          // handle error
+          console.log(error);
+        })
+      },
+      goToPage(x){
+        let query = _.clone(this.$route.query);
+        if(query.page == undefined){
+          query.page = 1
+        }
+        query.page = parseInt(query.page)+x;
+        if(query.page < 1){
+          query.page = 1
+        } 
+            
+        this.$router.push({ path: '', query: query})
+      },
+      getNowPlaying(page){
+        this.title = 'Now Playing';
+        this.listMode = 'movie/now_playing';
+        this.getMovies(page);
+      },
+      searchMovie(page,query){
+        this.title = `Search result for ${query}`;
+        this.listMode = 'search/movie';
+        let params = `&query=${query}`;
+        this.getMovies(page,params);
+      },
+      transformCollections(movies){
+         return _.map(movies, function (movie) {
             return {
               title: movie.title,
               slug: movie.id + '-' + movie.title.toLowerCase().replace(/\s+/g, '-'),
@@ -59,18 +90,17 @@
               rating: movie.vote_average
             }
           })
-
-        }).catch(function (error) {
-          // handle error
-          console.log(error);
-        })
       },
       loadPage(){
+        let page = 1;
         if(this.$route.query.page){
-          this.page = this.$route.query.page;
+          page = this.$route.query.page;
         }
-        
-        this.getMovies(this.page);
+        if(this.$route.query.search){
+          this.searchMovie(page,this.$route.query.search)
+        }else{
+          this.getNowPlaying(page);
+        }
         
       }
     },

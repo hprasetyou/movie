@@ -143,7 +143,7 @@ export default {
         this.credits = movie.credits;
     },
     getMovieInfo(movieId){
-        axios.get(`${conf.ApiUrl}/${movieId}?api_key=${conf.ClientKey}&append_to_response=credits`).then((
+        axios.get(`${conf.ApiUrl}movie/${movieId}?api_key=${conf.ClientKey}&append_to_response=credits`).then((
             response) => {
             let movie = response.data;
             this.setMovieInfo(movie);      
@@ -153,7 +153,7 @@ export default {
         })
     },
     getRecommendations(movieId){
-        axios.get(`${conf.ApiUrl}/${movieId}/recommendations?api_key=${conf.ClientKey}`).then((
+        axios.get(`${conf.ApiUrl}movie/${movieId}/recommendations?api_key=${conf.ClientKey}`).then((
             response) => {
             let movies = response.data.results;    
             this.recommendations = this.transformMoviesDataCollections(movies);
@@ -164,7 +164,7 @@ export default {
         })
     },
     getSimilar(movieId){
-        axios.get(`${conf.ApiUrl}/${movieId}/similar?api_key=${conf.ClientKey}`).then((
+        axios.get(`${conf.ApiUrl}movie/${movieId}/similar?api_key=${conf.ClientKey}`).then((
             response) => {
             let movies = response.data.results;    
             this.similar = this.transformMoviesDataCollections(movies);

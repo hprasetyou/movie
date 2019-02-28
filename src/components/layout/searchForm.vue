@@ -1,8 +1,7 @@
 <template>
-  <form class="form-inline">
+  <form  v-on:submit.prevent="submitForm" class="form-inline">
     <div class="input-group">
-      <input type="text" class="form-control" v-model="searchInput" placeholder="I want to watch..." 
-        aria-describedby="button-addon2">
+      <input type="text" class="form-control" v-model="searchInput" placeholder="I want to watch..." >
       <div class="input-group-append">
         <button class="btn btn-primary" v-on:click="submitForm" type="button" id="button-addon2">Search</button>
       </div>
