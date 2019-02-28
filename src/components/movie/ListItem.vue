@@ -1,7 +1,7 @@
 <template>
   <router-link tag="a" class="movie-list-item" :to="'/'+slug">
     <div :class="['border','rounded',(display=='list'?'row':'')]">
-      <div :class="['movie-list-item--image',(display=='list'?'col-4 col-lg-3':'')]">
+      <div :class="['movie-list-item--image',(display=='list'?'col-4 px-0 col-lg-3':'')]">
         <img :src="cover" alt="">
       </div>
       <div :class="['movie-list-item--info-wrapper','p-md-3',(display=='list'?'col-8 col-lg-9':'')]">
@@ -45,6 +45,9 @@
 </script>
 <style lang="less">
   .movie-list-item {
+    & > div{
+      overflow: hidden;
+    }
 
     &,
     &:hover {

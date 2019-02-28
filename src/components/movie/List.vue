@@ -2,6 +2,10 @@
   <div class="row">
     <div class="section col-lg-9">
       <div class="section--title my-lg-3 py-lg-3 border-bottom">
+        <div class="pagination float-right">
+          <router-link tag="a" class="btn" :to="'?page=1'"> < </router-link>
+          <router-link tag="a" class="btn" :to="'?page=2'"> > </router-link>
+        </div>
         <h3 class="my-lg-0">{{ title }}</h3>
       </div>
       <div class="movie-list row mx-md-0">
@@ -60,16 +64,24 @@
           // handle error
           console.log(error);
         })
+      },
+      loadPage(){
+        if(this.$route.query.page){
+          this.page = this.$route.query.page;
+        }
+        
+        this.getMovies(this.page);
+        
       }
     },
     mounted() {
-      if(this.$route.query.page){
-        this.page = this.$route.query.page;
+      this.loadPage();
+    },
+    watch:{
+      $route (to, from){
+          this.loadPage();
       }
-      console.log(this.collections);
-      
-      this.getMovies(this.page);
-    }
+    } 
   }
 
 </script>
