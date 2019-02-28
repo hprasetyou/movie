@@ -4,26 +4,16 @@ export const balanceMixins = {
             balance: 0
         }
     },
-    methods:{
-        setBalance(amount){
-            localStorage.setItem('balance',amount);
-            this.balance = amount;
-            console.log(this.balance);
-            
-        },
-        getBalance(){
-            if (localStorage.getItem('balance')) {
-                let balance = parseInt(localStorage.getItem('balance'));
-                this.balance = balance;
-                return balance;
-            }else{
-                return false;
-            }
+    mounted(){
+        if(localStorage.getItem('balance')){
+            this.balance = localStorage.getItem('balance');
+        }else{
+            this.balance = 100000;
         }
     },
-    mounted(){
-        if(this.getBalance() === false){
-            this.setBalance(1000000);
+    watch: {
+        balance(val){
+            localStorage.balance = val;
         }
-    }
+    },
 }

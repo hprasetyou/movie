@@ -21,6 +21,7 @@
           </div>
           <span v-if="isInCollections(movie.id)">you have this!</span>
           {{ getPrice(movie.vote_average) }}
+          your balance: {{ balance }}
           <button v-if="isAffordable() && !isInCollections(movie.id)" @click="addToCollection" class="btn btn-primary">Add to Collections</button>
       </div>
     </div>
@@ -59,12 +60,12 @@ export default {
   methods: {
     addToCollection(){
       this.addCollections(this.movie.id);
-      this.setBalance(this.getBalance() - this.getPrice(this.movie.vote_average));
+      this.balance -= this.getPrice(this.movie.vote_average);
       console.log(this.getCollections());
       
     },
     isAffordable(){
-      if( this.getBalance() >= this.getPrice(this.movie.vote_average)){
+      if( this.balance >= this.getPrice(this.movie.vote_average)){
         return true;
       }
       return false;

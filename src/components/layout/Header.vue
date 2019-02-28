@@ -6,7 +6,6 @@
             TokoFlix
           </router-link>
         <a class="navbar-brand text-light" href="/"></a>
-        <span class="navbar-nav ml-auto text-light">Balance: {{ balance }}</span>
       </div>
     </nav>
   </div>
