@@ -1,6 +1,11 @@
 <template>
   <router-link tag="a" class="movie-list-item" :to="'/'+slug">
     <div :class="['border','rounded',(display=='list'?'row':display)]">
+      <div class="movie-list-item--messages">
+        <div v-if="isOwned" class="movie-list-item--message-item bg-success">
+          <small>You have this</small>
+        </div>
+      </div>
       <div :class="['movie-list-item--image',(display=='list'?'col-4 px-0 col-lg-3':'')]">
         <img :src="cover" alt="">
       </div>
@@ -34,6 +39,10 @@
       cover: String,
       title: String,
       rating: Number,
+      isOwned: {
+        default: false,
+        type: Boolean
+      },
       showPrice: {
         default: true,
         type: Boolean
@@ -74,6 +83,15 @@
       .grid:hover &{
         height: 50%;
       }
+    }
+
+    &--messages{
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1;
+      text-align: center;
     }
 
     &,

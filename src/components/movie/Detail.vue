@@ -1,8 +1,12 @@
 <template>
-  <div class="mt-3 mt-lg-4">
+  <div class="mt-3 mt-lg-4 border rounded p-2 p-lg-3">
+    
     <div class="row">
       <div class="col-lg-4">
         <div class="movie-cover">
+          <div v-if="isInCollections(movie)" class="py-1 bg-success text-center">
+            <span>This movie is in your collections <font-awesome-icon icon="film" /> </span>
+          </div>
           <img :src="movie.cover" alt="">
           <p>Duration {{ movie.duration }}</p>
         </div>
