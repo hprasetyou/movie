@@ -10,7 +10,7 @@
       </div>
       <div class="movie-list row mx-md-0">
         <div :class="['col-md-3','px-md-2','mb-sm-3']" v-for="(movie, key) in movies" :key="key">
-          <movie-item :title="movie.title" :slug="movie.slug" :cover="movie.cover" :date="movie.date" :rating="movie.rating" />
+          <movie-item :isOwned="movie.isOwned" :title="movie.title" :slug="movie.slug" :cover="movie.cover" :date="movie.date" :rating="movie.rating" />
         </div>
       </div>
     </div>
@@ -81,13 +81,21 @@
         this.getMovies(page,params);
       },
       transformCollections(movies){
+         let myCollections = _.map(this.collections,function(item){
+           return parseInt(item.id);
+         });
+         console.log(myCollections);
+         
          return _.map(movies, function (movie) {
+           console.log(myCollections.indexOf(movie.id));
+           
             return {
               title: movie.title,
               slug: movie.id + '-' + movie.title.toLowerCase().replace(/\s+/g, '-'),
               cover: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
               date: movie.release_date,
-              rating: movie.vote_average
+              rating: movie.vote_average,
+              isOwned: (myCollections.indexOf(movie.id) != -1)
             }
           })
       },
