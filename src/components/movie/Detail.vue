@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mt-3 mt-lg-4">
     <div class="row">
       <div class="col-lg-4">
         <div class="movie-cover">
